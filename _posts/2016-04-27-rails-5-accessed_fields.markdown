@@ -9,7 +9,7 @@ En el siguiente ejemplo vamos a conocer una nueva funcionalidad que trae Rails5 
 
 Para ello vamos a crear un proyecto en Rails5.
 
-Una ves instalada y configurada nuestra aplicacion, rails nos poprorciona una manera muy facil de seleccionar todos los campos de una base de datos.
+Una vez instalada y configurada nuestra aplicación, rails nos proporciona una manera muy fácil de seleccionar todos los campos de una base de datos.
 
 {% highlight ruby %}
 @users = User.all
