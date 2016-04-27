@@ -20,7 +20,7 @@ rails g model user name:string
 Además agregaremos un método,cuya función será buscar usuarios por el atributo name.
 {% highlight ruby %}
 def search(params)
- User.where("name LIKE '#{params}'")
+ User.where("name = '#{params}'")
 end
 {% endhighlight %}
 
