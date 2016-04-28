@@ -11,7 +11,7 @@ Durante un año, Mandrill fue el servicio de correo que ocupamos en #BTA, en don
 
 Así que nos toco migrar a un nuevo servicio, el servicio que escogimos fue Amazon SES, por qué? porque los costos son muy bajos. Incluso en comparación con Mandrill, Amazon nos sale más económico.
 Bueno, ahora vamos a la parte entretenida. Lo práctico para ello vamos a Amazon Web Services (AWS)
-En nuestro panel elegimos el siguiente servicio Amazon SES:
+En nuestro panel elegimos el siguiente servicio Amazon SES :
 
 ![alt text](/assets/posts/01/1.png)
 
