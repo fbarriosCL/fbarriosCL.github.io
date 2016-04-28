@@ -7,10 +7,11 @@ categories: jekyll update
 
 Hoy llegando al departamento @abelorian, me comenta que llegado un mail a Backtrack Academy notificando que hoy se cancela nuestra cuenta en Mandrill, un servicio que teníamos implementado para la notificación de cursos y artículos mediantes correo electrónico  y como buen Chileno dejamos todo para el final. Lo positivo que escribimos juntos este post.
 
-Durante un año, Mandrill fue el servicio de correo que ocupamos en #BTA, en donde se enviaba unos 100.000 correos mensuales, comunicando los cursos, post, correos transaccionales, algo muy importante para nuestra startup.
+Durante un año, Mandrill fue el servicio de correo que ocupamos en #BTA, en donde se enviaba unos 100.000 correos mensuales, comunicando los nuevos cursos, post, correos transaccionales, algo muy importante para mantenernos en comunicación con nuestros usuarios.
 
-Así que nos toco migrar a un nuevo serviscio, el servicio que escogimos fue Amazon SES, por qué? porque los costos son muy bajos. Incluso en comparación con Mandrill, Amazon nos sale más económico.
-Bueno, ahora vamos a la parte entretenida. Lo práctico para ello vamos a Amazon Web Services (AWS)
+Así que nos toco migrar a un nuevo servicio, el servicio que escogimos fue Amazon SES, por qué? porque los costos son muy bajos y escalabilidad. Incluso en comparación con Mandrill, Amazon nos sale mucho más económico.
+Bueno, ahora vamos a la parte entretenida. Lo práctico para ello vamos a  <a src="https://aws.amazon.com/es/">Amazon Web Services (AWS)</a>
+
 En nuestro panel elegimos el siguiente servicio Amazon SES :
 
 ![alt text](/assets/posts/01/1.png)
