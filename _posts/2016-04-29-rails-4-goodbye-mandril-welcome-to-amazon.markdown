@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Rails 4 Migrando de Mandril con destino Amazon SES"
-date:   2016-04-20 00:37:19 -0300
+date:   2016-04-29 00:37:19 -0300
 categories: jekyll update
 ---
 
