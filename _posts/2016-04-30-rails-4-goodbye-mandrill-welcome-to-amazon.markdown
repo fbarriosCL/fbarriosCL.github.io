@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Rails 4 Goodbye Mandril Welcom To Amazon SES "
+title:  "Rails 4 Goodbye Mandrill Welcome To Amazon SES"
 date:   2016-04-25 00:37:19 -0300
 categories: jekyll update
 ---
