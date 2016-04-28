@@ -4,12 +4,4 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
-
-You can find the source code for the Jekyll new theme at:
-{% include icon-github.html username="jglovier" %} /
-[jekyll-new](https://github.com/jglovier/jekyll-new)
-
-You can find the source code for Jekyll at
-{% include icon-github.html username="jekyll" %} /
-[jekyll](https://github.com/jekyll/jekyll)
+I'm Felipe Barrios CEO of Backtrack Academy ethical hacking community. Entrepreneur and developer on ruby on rails, Ror became my preferred language, the basis of all my projects, I consider myself proactive and passionate about my work. I'm currently working as a software developer in ArchDaily, computer security lover and I like to work on projects related to digital companies.
