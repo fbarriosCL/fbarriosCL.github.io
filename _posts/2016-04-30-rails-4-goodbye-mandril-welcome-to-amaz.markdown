@@ -13,23 +13,23 @@ Así que nos toco migrar a un nuevo serviscio, el servicio que escogimos fue Ama
 Bueno, ahora vamos a la parte entretenida. Lo práctico para ello vamos a Amazon Web Services (AWS)
 En nuestro panel elegimos el siguiente servicio Amazon SES :
 
-(/assets/posts/01/1.png)
+![alt text](/assets/posts/01/1.png)
 
 Luego hacemos clic en ```domains``` para validar nuestro dominio.
 
-(/assets/posts/01/2.png)
+![alt text](/assets/posts/01/2.png)
 
 Asi que le damos clic al boton blue 
 
-(/assets/posts/01/3.png)
+![alt text](/assets/posts/01/3.png)
 
 Ingresamos nuestro dominio
 
-(/assets/posts/01/4.png)
+![alt text](/assets/posts/01/4.png)
 
 Esta verificación se hace mediante el DNS, en donde nos pide ingresar un registro.
 
-(/assets/posts/01/5.png)
+![alt text](/assets/posts/01/5.png)
 
 Acá es donde vamos a tener que agregar nueva zona
 
@@ -42,26 +42,26 @@ Luego, debemos repetir la misma verificación para el DKIM en donde vamos agrega
 Una vez comprobado nos vamos a ```emails_address``` en donde tenemos que ingresar un correo valido de origen,para eso agregamos un mail, medidas antispam. En mi ejemplo 3 pero basta con solo 1 email.
 
 
-(/assets/posts/01/6.png)
+![alt text](/assets/posts/01/6.png)
 
 Le damos clic nuevamente al botón azul ```Verify new email address```
 
-(/assets/posts/01/7.png)
+![alt text](/assets/posts/01/7.png)
 
 Te va a llegar un link con un codigó de verificación, le damos clic y queda listo el correo como verificado y habilitado para enviar mails desde esa direccion.
 
 Ahora vamos a configurar el STMP el envío de correos salientes hijo, porq no hay correos entrantes.
 
 
-(/assets/posts/01/9.png)
+![alt text](/assets/posts/01/9.png)
 
 Nos dará nuestra credencial
 
-(/assets/posts/01/10.png)
+![alt text](/assets/posts/01/10.png)
 
 A continuación nos entregará STMP username y STMP password para asi poder realizar la configuración en rails que es de donde enviaremos los mails.
 
-(/assets/posts/01/11.png)
+![alt text](/assets/posts/01/11.png)
 
 Ahora en nuestro proyecto Rails vamos a ```config/environments/production.rb```
 
