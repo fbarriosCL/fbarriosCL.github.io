@@ -36,3 +36,15 @@ En caso contrario si queremos instalar sin documentación
 ```
 gem install rails -v 5.0.0.beta2 --no-ri --no-rdoc
 ```
+
+Ahora procedemos a crear el proyecto:
+
+```
+rails new my-proyect
+```
+
+Si queremos especificar el motor
+```
+rails new my-proyect -D database
+```
+
