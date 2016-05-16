@@ -1,0 +1,200 @@
+---
+layout: post
+title:  "Phoenix es un framework de desarrollo web CRUD."
+date:   2016-05-02 00:37:19 -0300
+categories: jekyll update
+---
+
+Phoenix es un framework de desarrollo web escrito en Elixir, patrón MVC. Muchos de sus componentes y conceptos le resultará familiar a los que tenemos experiencia en otros framework como Ruby on Rails o Django. Phoenix ofrece lo mejor de ambos mundos - alta productividad en ambitos de desarrollo y un alto rendimiento de la aplicación.
+
+Vamos a necesitar instalar:
+
+* Elixir: Phoenix está escrito en Elixir, y nuestro código de la aplicación también será escrito en Elixir. No vamos a entrar ahora en una aplicación de Phoenix sin él!
+* Erlang: Elixir se compila a código de bytes de Erlang para ejecutar en la máquina virtual de Erlang. Sin 
+Erlang, Elixir tiene ninguna máquina virtual para ejecutar en, por lo que necesitamos para instalar Erlang también.
+* Phoenix
+* Plug, Cowboy, and Ecto
+* node.js (>= 5.0.0)
+* PostgreSQL
+
+Ahora vamos a mondar nuestro entorno para poder trabajar con este hermoso framework que mucho promete, lo primero sera instalar elixir:
+
+Para instalar elixir en Mac OS X lo vamos hacer mediante Homebrew
+
+Lo primero sera hacer un update a nuestro homebrew para tener la ultima version: 
+
+```
+➜  ~ brew update
+```
+
+Para instalar elixir
+
+```
+➜  ~ brew install elixir
+```
+
+lo siguiente sera instalar erlang
+
+Erlang es un lenguaje de programación utilizado para construir sistemas blandos masivamente escalable en tiempo real con requisitos de alta disponibilidad. Algunos de sus usos se encuentran en las telecomunicaciones, la banca, el comercio electrónico, telefonía e informática y la mensajería instantánea. sistema de ejecución de Erlang ha incorporado soporte para la concurrencia, la distribución y la tolerancia a fallos.
+
+```
+➜  ~ brew install erlang
+```
+
+```
+➜  ~ elixir -v
+Erlang/OTP 18 [erts-7.3] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+
+Elixir 1.2.5
+```
+
+Gestor de paquetes Hex para poder levantar phoenix.
+
+```
+➜  ~ mix local.hex
+Are you sure you want to install archive "http://s3.amazonaws.com/s3.hex.pm/installs/1.2.0/hex-0.11.5.ez"? [Yn] Y
+* creating .mix/archives/hex-0.11.5.ez
+```
+
+```
+➜  ~ mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez
+```
+
+```
+➜  ~ mix phoenix.new hello_phoenix
+* creating hello_phoenix/config/config.exs
+* creating hello_phoenix/config/dev.exs
+* creating hello_phoenix/config/prod.exs
+* creating hello_phoenix/config/prod.secret.exs
+* creating hello_phoenix/config/test.exs
+* creating hello_phoenix/lib/hello_phoenix.ex
+* creating hello_phoenix/lib/hello_phoenix/endpoint.ex
+* creating hello_phoenix/test/views/error_view_test.exs
+* creating hello_phoenix/test/support/conn_case.ex
+* creating hello_phoenix/test/support/channel_case.ex
+* creating hello_phoenix/test/test_helper.exs
+* creating hello_phoenix/web/channels/user_socket.ex
+* creating hello_phoenix/web/router.ex
+* creating hello_phoenix/web/views/error_view.ex
+* creating hello_phoenix/web/web.ex
+* creating hello_phoenix/mix.exs
+* creating hello_phoenix/README.md
+* creating hello_phoenix/web/gettext.ex
+* creating hello_phoenix/priv/gettext/errors.pot
+* creating hello_phoenix/priv/gettext/en/LC_MESSAGES/errors.po
+* creating hello_phoenix/web/views/error_helpers.ex
+* creating hello_phoenix/lib/hello_phoenix/repo.ex
+* creating hello_phoenix/test/support/model_case.ex
+* creating hello_phoenix/priv/repo/seeds.exs
+* creating hello_phoenix/.gitignore
+* creating hello_phoenix/brunch-config.js
+* creating hello_phoenix/package.json
+* creating hello_phoenix/web/static/css/app.css
+* creating hello_phoenix/web/static/js/app.js
+* creating hello_phoenix/web/static/js/socket.js
+* creating hello_phoenix/web/static/assets/robots.txt
+* creating hello_phoenix/web/static/assets/images/phoenix.png
+* creating hello_phoenix/web/static/assets/favicon.ico
+* creating hello_phoenix/test/controllers/page_controller_test.exs
+* creating hello_phoenix/test/views/layout_view_test.exs
+* creating hello_phoenix/test/views/page_view_test.exs
+* creating hello_phoenix/web/controllers/page_controller.ex
+* creating hello_phoenix/web/templates/layout/app.html.eex
+* creating hello_phoenix/web/templates/page/index.html.eex
+* creating hello_phoenix/web/views/layout_view.ex
+* creating hello_phoenix/web/views/page_view.ex
+
+Fetch and install dependencies? [Yn]
+
+Fetch and install dependencies? [Yn] Y
+* running mix deps.get
+* running npm install && node node_modules/brunch/bin/brunch build
+
+We are all set! Run your Phoenix application:
+
+    $ cd hello_phoenix
+    $ mix phoenix.server
+
+You can also run your app inside IEx (Interactive Elixir) as:
+
+    $ iex -S mix phoenix.server
+
+Before moving on, configure your database in config/dev.exs and run:
+
+    $ mix ecto.create
+```
+
+```
+➜  mix local.rebar
+* creating /Users/fbarrios/.mix/rebar
+* creating /Users/fbarrios/.mix/rebar3
+```
+Up server
+
+```
+➜  mix phoenix.server
+```
+
+En caso de que de error y no cargen los CSS
+
+```
+Couldn't find preset "/Users/fbarrios/Documents/phoenix/hello_test/node_modules/babel-preset-es2015
+```
+
+Instalamos babel-preset-es2015
+
+```
+npm install --save-dev babel-preset-es2015
+```
+
+CRUD
+
+```
+$ mix phoenix.gen.html → which creates: model, view, controllers, repository, templates, tests
+$ mix phoenix.gen.channel → which creates: channel and tests
+$ mix phoenix.gen.json → for API, which creates: model, view, controllers, repository, tests
+$ mix phoenix.gen.model → which creates: model and repository
+```
+
+Vamos a crear un blog
+
+```
+mix phoenix.gen.html Post posts title:string body:text
+```
+
+```
+* creating web/controllers/post_controller.ex
+* creating web/templates/post/edit.html.eex
+* creating web/templates/post/form.html.eex
+* creating web/templates/post/index.html.eex
+* creating web/templates/post/new.html.eex
+* creating web/templates/post/show.html.eex
+* creating web/views/post_view.ex
+* creating test/controllers/post_controller_test.exs
+* creating priv/repo/migrations/20160516033253_create_post.exs
+* creating web/models/post.ex
+* creating test/models/post_test.exs
+
+Add the resource to your browser scope in web/router.ex:
+
+    resources "/posts", PostController
+
+Remember to update your repository by running migrations:
+
+    $ mix ecto.migrate
+```
+Ejecutamos 
+
+```
+$ mix ecto.migrate
+```
+
+```
+mix ecto.migrate
+
+00:48:33.841 [info]  == Running HelloPhoenix.Repo.Migrations.CreatePost.change/0 forward
+
+00:48:33.841 [info]  create table posts
+
+00:48:34.216 [info]  == Migrated in 3.7s
+```
