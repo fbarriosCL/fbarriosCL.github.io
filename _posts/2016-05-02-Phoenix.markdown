@@ -90,8 +90,6 @@ Are you sure you want to install archive "http://s3.amazonaws.com/s3.hex.pm/inst
 
 Y vuala hasta acá ya tenemos todo listo para poder desarrollar, ahora vamos a crear nuestro primer proyecto: asi que ejecutamos ```mix phoenix.new hello_phoenix``
 
-
-
 ```
 ➜  ~ mix phoenix.new hello_phoenix
 * creating hello_phoenix/config/config.exs
@@ -199,15 +197,20 @@ Estructura de nuestra aplicación:
 └── web.ex
 ```
 
-CRUD
+First Resourse
 
 ```
-$ mix phoenix.gen.html → which creates: model, view, controllers, repository, templates, tests
-$ mix phoenix.gen.channel → which creates: channel and tests
-$ mix phoenix.gen.json → for API, which creates: model, view, controllers, repository, tests
-$ mix phoenix.gen.model → which creates: model and repository
+$ mix help | grep -i phoenix
+$ mix phoenix.digest      # Digests and compress static files
+$ mix phoenix.gen.channel # Generates a Phoenix channel
+$ mix phoenix.gen.html    # Generates controller, model and views for an HTML based resource
+$ mix phoenix.gen.json    # Generates a controller and model for a JSON based resource
+$ mix phoenix.gen.model   # Generates an Ecto model
+$ mix phoenix.gen.secret  # Generates a secret
+$ mix phoenix.new         # Create a new Phoenix v1.1.2 application
+$ mix phoenix.routes      # Prints all routes
+$ mix phoenix.server      # Starts applications and their server
 ```
-
 
 Ejemplo tipo scaffols en ruby on rails:
 
@@ -258,13 +261,15 @@ mix ecto.migrate
 mix phoenix.gen.channel Room rooms
 ```
 
-El primer argumento corresponde al nombew del canal, el segundo topic.
+El primer argumento es el nombre del módulo para el canal. El segundo argumento es el plural.
 
-The generated model will contain:
-
+```
 a channel in web/channels
 a channel_test in test/channels
+```
+
 ### Routes.
+
 
 El archivo de router que genera Phoenix, ```web/router.ex``` , tendrá un aspecto como éste:
 
@@ -329,4 +334,42 @@ De esta manera cargamos :browser y utilizamos la basura
     resources "/posts", PostController
     get "/", PageController, :index
   end
-``
+```
+
+### Pero qué es plug...
+Plug permite la comunicacion entre diferentes maquinas Erlang.
+* Una especificación de módulos componibles entre las aplicaciones web.
+* Adaptadores de conexión para diferentes servidores web en Erlang VM.
+
+Se puede pensar ```plug``` es un framgento de código que recibe una estructura de datos, hace algún tipo de transformación, y devuelve esta misma estructura de datos, ligeramente modificada. Esta estructura de datos que Plug recibe y vuelve por lo general se llama conexión, y representa todo lo que hay que saber acerca de una solicitud.
+
+Como siempre plug reciben y devuelven una conexión, pueden ser fácilmente componibles, formando lo que se llama una ```Plug pipeline```.
+
+Tenemos dos tipos de plug:
+
+* Function plugs.  
+* Module plugs.
+
+Function plug es una función que recibe ```connection``` (```%Plug.Conn{}```) y un conjunto de opciones, y devuelve una ```connection```.  Aquí está un ejemplo sencillo de Plug:
+
+```
+def my_plug(conn, opts) do
+  conn
+end
+```
+Es cualquier módulo que implementa dos funciones: ```init/1``` y ```call/2```, como el siguiente ejemplo:
+
+```
+module MyPlug do
+  def init(opts) do
+    opts
+  end
+
+  def call(conn, opts) do
+    conn
+  end
+end
+```
+
+Una característica interesante de ```module plug```  es que ```init / 1``` se ejecuta en tiempo de compilación, mientras que la llamada```call / 2``` ocurre en tiempo de ejecución.
+
