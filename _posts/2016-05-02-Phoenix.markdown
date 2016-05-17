@@ -310,10 +310,10 @@ HTTP  ```get```, ```post```, y ```put```. y no menos importante ```resources```,
 
 De esta manera cargamos :browser y utilizamos la basura
 
-´´´
+```
   scope "/", HelloPhoenix do
     pipe_through :browser # Use the default browser stack
     resources "/posts", PostController
     get "/", PageController, :index
   end
-´´´
+```
