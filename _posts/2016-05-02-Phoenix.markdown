@@ -4,7 +4,7 @@ title:  "Phoenix es un framework de desarrollo web."
 date:   2016-05-02 00:37:19 -0300
 categories: jekyll update
 ---
-### Introducción
+#### Introducción
 Phoenix es un framework de desarrollo web escrito en Elixir, patrón MVC. Muchos de sus componentes y conceptos le resultará familiar a los que tenemos experiencia en otros framework como Ruby on Rails o Django. Phoenix ofrece lo mejor de ambos mundos - alta productividad en ambitos de desarrollo y un alto rendimiento de la aplicación.
 
 Pero antes de seguir vamos a definir algunos conceptos:
@@ -23,12 +23,13 @@ Elixir es un lenguaje que se ejecuta en la máquina virtual de Erlang. Por lo qu
 
 La diferencia entre Erlang y elixir no es sólo la sintaxis. Sin embargo, la sintaxis es importante, y especialmente para desarrolladores de Ruby la sintaxis Elixir será muy familiar.
 
-### Inmutabilidad y la programación funcional
+#### Inmutabilidad y la programación funcional
 Elixir es un lenguaje funcional con la inmutabilidad.
+La programación funcional es un paradigma de <b>programación declarativa</b> basado en el uso de <b>funciones matemáticas</b>, en contraste con la <b>programación imperativa</b>, que enfatiza los <b>cambios de estado</b> mediante la <b>mutación</b> de variables. <b>La programación funcional</b> tiene sus raíces en el cálculo <b>lambda</b>, un sistema formal desarrollado en los años 1930 para investigar la definición de función, la aplicación de las funciones y la recursión. Muchos lenguajes de programación funcionales pueden ser vistos como elaboraciones del cálculo lambda.
 
 Me he dado cuenta de lo beneficioso que es. Incluso para la programación de un solo subproceso, mutabilidad trae una incertidumbre acerca de cómo va a ejecutar un programa. Y que no se pierda la mutabilidad en absoluto. La programación funcional y la inmutabilidad ayuda a aclarar las cosas y hace que sea más fácil de razonar sobre el código.
 
-### Concurrencia
+#### Concurrencia
 Otro punto fuerte para Elixir es la simultaneidad. Concurrencia está aquí para quedarse, por varias razones. Para mencionar algunos: La tendencia en hardware es cada vez más núcleos de CPU. Los fabricantes de CPU no van a mejorar el rendimiento de un solo núcleo a la misma velocidad que antes. En su lugar, son la adición de más núcleos. También el mundo es concurrente y no desea que los usuarios finales u otros servicios de software que esperen innecesariamente una respuesta.
 
 En la mayoría de los idiomas de concurrencia es un poco de dolor. No sólo es peligroso y difícil de hacer la sincronización. Con el estado mutable y bifurcación de procesos nativos también es a menudo lento y utiliza una gran cantidad de memoria.
