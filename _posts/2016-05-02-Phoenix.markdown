@@ -178,7 +178,7 @@ Instalamos babel-preset-es2015
 ```
 npm install --save-dev babel-preset-es2015
 ```
-Estructura con la cual vamos a trabajar:
+Estructura de nuestra aplicación:
 
 ```
 ├── channels
@@ -208,7 +208,8 @@ $ mix phoenix.gen.json → for API, which creates: model, view, controllers, rep
 $ mix phoenix.gen.model → which creates: model and repository
 ```
 
-Vamos a crear un blog
+
+Ejemplo tipo scaffols en ruby on rails:
 
 ```
 mix phoenix.gen.html Post posts title:string body:text
@@ -251,6 +252,18 @@ mix ecto.migrate
 00:48:34.216 [info]  == Migrated in 3.7s
 ```
 
+# Channel
+
+```
+mix phoenix.gen.channel Room rooms
+```
+
+El primer argumento corresponde al nombew del canal, el segundo topic.
+
+The generated model will contain:
+
+a channel in web/channels
+a channel_test in test/channels
 ### Routes.
 
 El archivo de router que genera Phoenix, ```web/router.ex``` , tendrá un aspecto como éste:
@@ -316,4 +329,4 @@ De esta manera cargamos :browser y utilizamos la basura
     resources "/posts", PostController
     get "/", PageController, :index
   end
-```
+``
