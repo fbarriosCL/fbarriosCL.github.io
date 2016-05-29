@@ -1,12 +1,9 @@
-
 ---
 layout: post
-title: "Logstasher y Kibana - Monitorinr your awesome application"
+title:  "Logstasher y Kibana - Monitorinr your awesome application"
 date:   2016-05-05 00:37:19 -0300
 categories: jekyll update
 ---
-
-
 
 Productos https://www.elastic.co/products
 
