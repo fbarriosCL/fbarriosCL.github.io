@@ -1,0 +1,21 @@
+---
+layout: post
+title:  "Suricata - Instalación y configuración"
+date:   2016-05-07 00:37:19 -0300
+categories: jekyll update
+---
+
+ 895  sudo add-apt-repository ppa:oisf/suricata-stable
+ 896  sudo apt-get update
+ sudo apt-get install suricata
+ sudo apt-get install suricata-dbg
+ apt-get update
+ apt-get upgrade
+
+ El siguiente paso es copiar classification.config, reference.config y suricata.yaml desde el directorio de base de construcción / instalación (ej. A partir de git será el directorio oisf) en el directorio / etc / suricata. Hacerlo introduciendo la siguiente:
+
+ sudo cp classification.config /etc/suricata
+ sudo cp reference.config /etc/suricata
+ sudo cp suricata.yaml /etc/suricata
+
+ https://redmine.openinfosecfoundation.org/projects/suricata/wiki/Snortconf_to_Suricatayaml

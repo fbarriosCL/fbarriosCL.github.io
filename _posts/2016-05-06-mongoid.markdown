@@ -1,0 +1,171 @@
+---
+layout: post
+title:  "Mongo desde cero"
+date:   2016-05-06 00:37:19 -0300
+categories: jekyll update
+---
+
+
+Caracteristicas mas imporantes:
+Mongo es una bd nosql, opensource escrito en C++.
+Trabajamos con documentos y colecciones.
+Escalabilidad de manera horizontal
+Nos permite utilizar Js por el lado del servidor
+
+¿Quienes utilizan?
+The New York Time, Cisco
+
+
+Instalacion
+Vamos al sitio web
+docs.mongodb.org/manual/installation
+y seguimos los pasos del sitio oficial, dependiendo del sistema operativo en mi caso OX.
+
+brew update
+
+```
+brew install mongodb
+```
+
+create db
+
+```
+mkdir -p /data/db
+```
+
+ver database
+
+```
+show database
+```
+
+cambiar bd
+
+```
+use name_database
+```
+
+saber en que base de datos estoy
+
+```
+db
+```
+
+Crear documento:
+
+```
+usuario = { name: "", lastname: "" }
+```
+
+podemos declarar variables
+
+```
+var usuario = { name: "", lastname: "" }
+```
+
+Insertar
+
+```
+db.usuarios.insert(usuario)
+```
+mongo db creara automaticamente la coleccion usuarios en nuestra base de datos, para grabar en disco.
+
+para ver coleccion
+
+```
+show collections;
+```
+
+para obtener los datos
+
+```
+db.usuarios.find()
+```
+
+```
+db.usuarios.findOne()
+```
+
+where not ($ne)
+
+```
+db.usuarios.find( { age: { $ne: 22 } })
+```
+
+guardar 
+db.usuarios.save(v)
+
+actualizar
+Primero parametro es la condicional
+segundo es $set o $unset el ptercer parametro es multi para ver si hay mas de algun documento con esa condicion.
+
+```
+db.usuarios.update( { name: "text"}, { $set: { name: "New test" } }, {multi: true } )
+```
+
+delete campo example cuando el nombre sea test
+elimina el campo 
+
+```
+db.usuarios.update( { name: "text"}, { $unset: { example: 1 } }, {multi: true } )
+```
+
+Elimina todos los documentos donde el nombre sea felipe
+
+```
+db.usuarios.remove({ name: "Felipe"})
+```
+
+```
+db.usuarios.remove({})
+```
+
+Vaciar toda la coleccion
+
+```
+db.usuarios.drop()
+```
+
+Eliminar db
+
+```
+db.dropDatabase()
+```
+
+Consulas mas especificas: ejemplo muestrame los nombres de usuario oculta los ids.
+
+```
+db.usuarios.find( {}, { name: 1 }, { id: 0 })
+```
+
+### Operadores
+
+```
+$gt 			>
+%gte 		>=
+$lt 			<
+$lte 		<=
+```
+
+Ejemplo traeme los usuarios con edad mayor a 10 y oculta el id
+
+```
+db.usuarios.find( {}, { age:  { $gt: 10 } }, { id: 0 })
+```
+
+Entre 10 y 20
+
+```
+db.usuarios.find( {}, { age:  { $gt: 10 , $lt: 20 } }, { id: 0 })
+```
+
+Cursores
+
+Ejemplo
+
+```
+var cursor = db.usuarios.find()
+cursor.forEach( function(d){ d.valor = 100; db.test.save(d); } )
+var cursor = db.test.find()
+cursor.forEach( function(d){ pint(d.valor)})
+```
