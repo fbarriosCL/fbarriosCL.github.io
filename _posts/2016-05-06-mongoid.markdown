@@ -169,3 +169,107 @@ cursor.forEach( function(d){ d.valor = 100; db.test.save(d); } )
 var cursor = db.test.find()
 cursor.forEach( function(d){ pint(d.valor)})
 ```
+
+
+Metodos de cursores
+
+```
+db.usuarios.find().count
+```
+
+Asendente
+
+```
+db.usuarios.find().sort({ valor: 1 })
+```
+
+Desendente
+
+```
+db.usuarios.find().sort({ valor: -1 })
+```
+
+Limite
+```
+db.usuarios.find().sort({ valor: -1 }).limit(10)
+```
+
+Skip saltate el primero
+
+```
+db.usuarios.find().sort({ valor: -1 }).skip(1).limit(10)
+```
+
+Tamaño sobre el skip
+
+```
+db.usuarios.find().sort({ valor: -1 }).skip(1).size()
+```
+
+Arreglos
+
+```
+var array = [1, 2, 3]
+var user = { name: "test", value: array }
+db.usuarios.insert(user)
+db.user.find()
+```
+Ejemplo crear array
+
+```
+db.usuarios.update({}, { $set: { new_array: [ ] } } )
+```
+
+Agregar nuevos elementos a nuestro arreglo, siempre ocupamos la palabra ```$set```, pero para trabajar con arreglos ocupamos ```$addToSet```, addToSet busca el elemento, si lo encuentra no hace nada, en caso contrario lo crea.
+
+Ejemplo agregamos un 4 valor al array
+
+```
+db.user.update( {}, { $addToSet: { value: 4 } } )
+```
+
+Otro ejemplo para insertar elementos a nuestro arreglo que se encuentra dentro de nuestro documento.
+
+```
+db.user.update( {}, { $push: { value: 4 } } )
+```
+
+Para insertar varios elementos en nuestro arreglo.
+
+```
+# Método push
+db.user.update( {}, { $push: { value: { $each: [ 5, 6]} } } )
+
+# Método addToSet
+db.user.update( {}, { $push: { value: { $each: [ 5, 6]} } } )
+```
+
+```$push``` y ```$addToSet``` siempre agregan los nuevos elementos al final.
+Si nosotros queremos indicar la posición  en nuestro arreglo.
+
+```
+db.user.update( {}, { $push: { value: { $each: [ 5, 6], $position: 4 } } } )
+```
+
+Agrega dos elementos 5 y 6 y al momento de insertar lo ordena.
+
+```
+db.user.update( {}, { $push: { value: { $each: [ 5, 6], $sort: 1 } } } )
+
+# Para ordenar
+db.user.update( {}, { $push: { value: { $each: [], $sort: 1 } } } )
+```
+
+Eliminar elementos de mi arreglo
+
+```
+db.user.update( {}, { $pull: { value: 40 } } )
+```
+Elimina todos los valores mayores o igual a 50
+
+```
+db.user.update( {}, { $pull: { value: { $gte: 50 }}})
+
+db.user.update( {}, { $pullAll: { value: [4, 5] }})
+```
+
