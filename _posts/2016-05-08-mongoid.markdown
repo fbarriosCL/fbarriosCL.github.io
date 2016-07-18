@@ -1,0 +1,596 @@
+---
+layout: post
+title:  "Documentación Mongoid"
+date:   2016-05-07 00:37:19 -0300
+categories: jekyll update
+---
+
+Instalación
+
+```
+gem install mongoid
+```
+
+Configuración
+
+Mongoid configuración se puede realizar a través de un mongoid.yml que especifica las opciones y los clientes.
+
+```
+development:
+clients:
+default:
+database: mongoid
+hosts:
+- localhost:27017
+```
+
+```
+rails g mongoid:config
+```
+
+Storage
+
+```
+class Person
+include Mongoid::Document
+end
+```
+
+La colección de documentos del modelo se puede cambiar a nivel de clase si le gustaría que persistieron en otro lugar. También puede cambiar la base de datos del cliente y el modelo se persistió en de los valores predeterminados.
+
+```
+class Person
+include Mongoid::Document
+store_in collection: "citizens", database: "other", client: "secondary"
+end
+```
+
+El macro ```store_in``` también puede tomar lambdas - un caso común de esto es aplicaciones para múltiples usuarios.
+
+```
+class Band
+include Mongoid::Document
+store_in database: ->{ Thread.current[:database] }
+end
+```
+
+Campos 
+
+A pesar de que MongoDB es una base de datos sin esquema, la mayoría de los usos estará con aplicaciones web donde los parámetros de formulario siempre vienen al servidor como cadenas. Mongoid proporciona un mecanismo sencillo para transformar estas cadenas en sus tipos apropiados a través de la definición de los campos de un documento Mongoid :: .
+
+Considere una clase simple para el modelado de una persona en una aplicación. Una persona puede tener un nombre, el apellido y el nombre. Podemos definir estos atributos en una persona mediante el uso de la macro campos.
+
+```
+class  Person 
+include  Mongoid :: Document 
+field  :first_name ,  type :  String 
+field  :middle_name ,  type :  String 
+field  :last_name ,  type :  String 
+end
+```
+
+A continuación se muestra una lista de tipos válidos para los campos.
+
+```
+Array
+BigDecimal
+Boolean
+Date
+DateTime
+Float
+Hash
+Integer
+BSON::ObjectId
+BSON::Binary
+Range
+Regexp
+String
+Symbol
+Time
+TimeWithZone
+```
+
+Si decide no especificar el tipo de campo con la definición, Mongoid lo tratará como un objeto y tratara de encasillar al enviar los valores de la base de datos. Esto puede ser ventajoso en 2 lugares, ya que la falta de intento de conversión dará lugar a una ligera ganancia de rendimiento. Sin embargo, algunos campos no son compatibles si no se define como campos. Una regla de oro para qué campos se pueden utilizar son:
+
+* Usted no está utilizando una interfaz web y los valores ya está fundido correctamente.
+* Todos los campos son cadenas.
+
+Uno de los inconvenientes de tener una base de datos sin esquema es que MongoDB debe almacenar toda la información de campo, junto con todos los documentos, lo que significa que se necesita una gran cantidad de espacio de almacenamiento en la RAM y en el disco. Un patrón común de limitar este es un alias de campos a un pequeño número de caracteres, mientras se mantiene el dominio en la aplicación expresiva. Mongoid le permite hacer esto y hacer referencia a los campos en el dominio a través de sus largos nombres de captadores, setters, y criterios al realizar la conversión para usted.
+
+```
+class Band
+include Mongoid::Document
+field :n, as: :name, type: String
+end
+
+band = Band.new(name: "Placebo")
+band.attributes #=> { "n" => "Placebo" }
+
+criteria = Band.where(name: "Placebo")
+criteria.selector #=> { "n" => "Placebo" }
+```
+
+Atributos solo de lectura
+
+```
+class Band
+include Mongoid::Document
+field :name, type: String
+field :origin, type: String
+
+attr_readonly :name, :origin
+end
+
+band = Band.create(name: "Placebo")
+band.update_attributes(name: "Tool") # Filters out the name change.
+
+```
+
+Herencia 
+
+Mongoid soporta herencia en tanto la raíz como la inclusión de documentos. En escenarios en los que los documentos se heredaron de sus campos, relaciones, validaciones y alcances se copian hacia abajo en sus documentos hijos, pero no viceversa.
+
+```
+class Canvas
+include Mongoid::Document
+field :name, type: String
+embeds_many :shapes
+end
+
+class Browser < Canvas
+field :version, type: Integer
+scope :recent, where(:version.gt => 3)
+end
+
+class Firefox < Browser
+end
+
+class Shape
+include Mongoid::Document
+field :x, type: Integer
+field :y, type: Integer
+embedded_in :canvas
+end
+
+class Circle < Shape
+field :radius, type: Float
+end
+
+class Rectangle < Shape
+field :width, type: Float
+field :height, type: Float
+end
+```
+
+En el ejemplo anterior, ```Canvas, Browser y Firefox`` va a guardar todo en la colección lienzos. Un atributo adicional ```_type`` se almacena con el fin de asegurarse de que cuando se carga desde la base de datos se devuelve el documento correcto. Esto también es válido para los documentos incrustados ```Circle, Rectangle```, y ```Shape```.
+
+Métodos de persistencia
+
+Mongoid soporta todas las operaciones CRUD para quienes están familiarizados con otros creadores de mapas de Ruby como Active asignador de datos o registro. Lo que distingue a Mongoid de otros creadores de mapas para MongoDB es que las operaciones de persistencia en general realizan actualizaciones atómicas sobre sólo los campos que han cambiado en vez de escribir todo el documento para la base de datos cada vez.
+
+Las secciones de persistencia proporcionarán ejemplos de lo que la operación de base de datos se lleva a cabo cuando se ejecuta el comando documentado.
+
+Ejemplos: 
+
+Insertar un documento o varios documentos en la base de datos.
+
+```
+Model.create
+
+Person.create(
+first_name: "Heinrich",
+last_name: "Heine"
+)
+
+Person.create([
+{ first_name: "Heinrich", last_name: "Heine" },
+{ first_name: "Willy", last_name: "Brandt" }
+])
+
+Person.create(first_name: "Heinrich") do |doc|
+doc.last_name = "Heine"
+end
+
+```
+
+Model.create!
+
+Insertar un documento o varios documentos en la base de datos, levantando un error si se produce un error de validación.
+
+```
+Person.create!(
+first_name: "Heinrich",
+last_name: "Heine"
+)
+
+Person.create!([
+{ first_name: "Heinrich", last_name: "Heine" },
+{ first_name: "Willy", last_name: "Brandt" }
+])
+
+Person.create!(first_name: "Heinrich") do |doc|
+doc.last_name = "Heine"
+end
+
+```
+
+Guarda los atributos modificados a la base de datos de forma atómica, o insertar el documento si marca como un nuevo registro a través de Modelo # new_record? . Puede pasar por alto las validaciones si se desea.
+
+```
+person = Person.new(
+first_name: "Heinrich",
+last_name: "Heine"
+)
+person.save
+person.save(validate: false)
+
+person.first_name = "Christian Johan"
+person.save
+
+```
+Model#update_attributes
+Actualizar los atributos que aparecen (y cualquier otro campo sucias).
+
+```
+person.update_attributes! ( 
+name:  "Jean" , 
+last_name :  "Zorg" 
+)
+```
+
+Actualización de un solo atributo, sin pasar por las validaciones.
+
+```
+Modelo # update_attribute
+
+person.update_attribute ( :first_name ,  "Jean" )
+```
+
+Realiza una upsert MongoDB en el documento. Si el documento existe en la base de datos, se sobrescribirá con los atributos actuales del documento en la memoria. Si el documento no existe en la base de datos, se inserta. Tenga en cuenta que esto sólo se corre el {antes | después |} _upsert alrededor de las devoluciones de llamada.
+
+```
+Modelo # upsert
+person = Person.new(
+first_name: "Heinrich",
+last_name: "Heine"
+)
+person.upsert
+```
+
+Actualización de fecha y hora ```updated_at``` del documento, opcionalmente con un campo de tiempo proporcionado extra. Esto caerá en cascada el toque a todos ```belongs_to``` relaciones de documento con el conjunto de opciones. Esta operación se salta las validaciones y las devoluciones de llamada.
+
+```
+Modelo # touch
+
+person.touch
+person.touch(:audited_at)
+```
+
+Elimina el documento desde la base de datos sin ejecutar las devoluciones de llamada.
+
+```
+Model#delete
+
+person.delete
+```
+
+Elimina el documento desde la base de datos durante la ejecución de destruir las devoluciones de llamada.
+
+```
+Modelo # destruyen
+person.destroy
+```
+
+Consultas
+
+Una de las características más importantes de MongoDB es su capacidad para ejecutar consultas dinámicas, que abstrae origen en un ambiente familiar DSL-estilo Arel que incluye Mongoid.
+
+
+Criteria#count
+
+```
+Band.count
+Band.where(name: "Photek").count
+```
+
+
+Criteria#distinct
+
+```
+Band.distinct(:name)
+Band.where(:fans.gt => 100000).
+distinct(:name)
+```
+
+Criteria#each
+
+```
+Band.where(members: 1).each do |band|
+p band.name
+end
+```
+
+Criteria#exists?
+
+```
+Band.exists?
+Band.where(name: "Photek").exists?
+```
+
+Criteria#find
+
+```
+Band.find("4baa56f1230048567300485c")
+Band.find(
+"4baa56f1230048567300485c",
+"4baa56f1230048567300485d"
+)
+Band.where(name: "Photek").find(
+"4baa56f1230048567300485c"
+)
+```
+
+Criteria#find_by
+
+```
+Band.find_by(name: "Photek")
+
+Band.find_by(name: "Tool") do |band|
+band.impressions += 1
+end
+```
+
+Criteria#find_or_create_by
+
+Encontrar un documento por los atributos proporcionados, y si no se encuentra crear y devolver una nueva persistido uno.
+
+```
+Band.find_or_create_by(name: "Photek")
+Band.where(:likes.gt => 10).find_or_create_by(name: "Photek")
+```
+
+Criteria#find_or_initialize_by
+
+Encontrar un documento por los atributos proporcionados, y si no se encuentra una nueva vuelta.
+
+```
+Band.find_or_initialize_by(name: "Photek")
+Band.where(:likes.gt => 10).find_or_initialize_by(name: "Photek")
+```
+
+Criteria#first_or_create
+
+Encuentra el primer documento por los atributos proporcionados, y si no se encuentra crear y devolver una nueva persistido uno.
+
+```
+Band.where(name: "Photek").first_or_create
+```
+
+Criteria#first_or_create!
+
+Encuentra el primer documento por los atributos proporcionados, y si no se encuentra crear y devolver una nueva persistido utilizando crear! .
+
+```
+Band.where(name: "Photek").first_or_create!
+```
+
+Criteria#first_or_initialize
+
+Encuentra el primer documento por los atributos proporcionados, y si no se encuentra una nueva vuelta.
+
+```
+Band.where(name: "Photek").first_or_initialize
+```
+
+Criteria#for_js
+
+Encuentra documentos para una expresión JavaScript proporcionado. Esto envolver el Javascript en un objeto `BSON :: Code` que es la manera segura de evitar ataques de inyección Javascript. *
+
+```
+Band.for_js("this.name = param", param: "Tool")
+```
+
+Criteria#length|size
+
+```
+Band.length
+Band.where(name: "FKA Twigs").size
+```
+
+Criteria#pluck
+
+```
+Band.all.pluck(:name)
+```
+
+Eager Loading
+
+Mongoid proporciona una facilidad para cargar documentos deseosos de relaciones para evitar que el problema de n + 1 cuando se itera sobre los documentos con relación de acceso. Ansiosos cargado es compatible con todas las relaciones con la excepción de las asociaciones belongs_to polimórficas.
+
+```
+class Band
+include Mongoid::Document
+has_many :albums
+end
+
+class Album
+include Mongoid::Document
+belongs_to :band
+end
+
+Band.includes(:albums).each do |band|
+p band.albums.first.name # Does not hit the database again.
+end
+```
+
+Consultas + Persistencia 
+
+Mongoid soporta operaciones de persistencia fuera de los criterios en una capacidad de la luz para cuando se desea realizar expresivamente inserciones de múltiples documentos, actualizaciones y eliminación.
+
+Criteria#create
+
+```
+Band.where(name: "Photek").create
+```
+
+Criteria#build|new
+
+Create a new (unsaved) document.
+
+```
+Band.where(name: "Photek").build
+Band.where(name: "Photek").new
+```
+
+Criteria#update
+
+```
+Band.where(name: "Photek").update(label: "Mute")
+```
+
+Criteria#update
+
+```
+Band.where(members: 2).update_all(label: "Mute")
+```
+
+Criteria#add_to_set
+
+Realizar un ```$addToSet``` en todos los documentos coincidentes.
+
+```
+Band.where(name: "Photek").add_to_set(label: "Mute")
+```
+
+Criteria#bit
+
+```
+Band.where(name: "Photek").bit(likes: { and: 14, or: 4 })
+```
+
+Criteria#inc
+
+```
+Band.where(name: "Photek").inc(likes: 123)
+```
+
+Criteria#pop
+
+```
+Band.where(name: "Photek").pop(members: -1)
+Band.where(name: "Photek").pop(members: 1)
+```
+
+Criteria#pull
+
+```
+Band.where(name: "Tool").pull(members: "Maynard")
+```
+
+Criteria#pull_all
+
+```
+Band.where(name: "Tool").
+pull_all(:members, [ "Maynard", "Danny" ])
+```
+
+Criteria#push
+
+```
+Band.where(name: "Tool").push(members: "Maynard")
+```
+
+Criteria#push_all
+
+```
+Band.where(name: "Tool").
+push_all(members: [ "Maynard", "Danny" ])
+```
+
+Criteria#rename
+
+```
+Band.where(name: "Tool").rename(name: :title)
+```
+
+Criteria#set
+
+```
+Band.where(name: "Tool").set(likes: 10000)
+```
+
+Criteria#unset
+
+```
+Band.where(name: "Tool").unset(:likes)
+```
+
+Criteria#delete
+
+```
+Band.where(label: "Mute").delete
+```
+
+Los métodos de clase en los modelos que devuelven criterios objetos también son tratados como ámbitos, y puede ser de cadena, así
+
+```
+class Band
+  include Mongoid::Document
+  field :name, type: String
+  field :active, type: Boolean, default: true
+
+  def self.active
+    where(active: true)
+  end
+end
+
+Band.active
+```
+
+Relaciones:
+
+Validaciones 
+
+Es importante tener en cuenta que, por defecto, Mongoid validará los niños de cualquier relación que se carga en la memoria a través de un validates_associated . Las relaciones que esto se aplica a son:
+
+```
+embeds_many
+embeds_one
+tiene muchas
+Tiene uno
+has_and_belongs_to_many
+```
+
+El documento principal de la relación debe utilizar la macro ```embeds_one``` para indicar que se tiene 1 hijo incrustado, donde el documento que está incrustado utiliza ``embedded_in```. Se requieren definiciones en ambos lados a la relación con el fin de que funcione correctamente.
+
+```
+class Band
+  include Mongoid::Document
+  embeds_one :label
+end
+
+class Label
+  include Mongoid::Document
+  field :name, type: String
+  embedded_in :band
+end
+```
+
+Relaciones uno a muchos, donde los niños están incrustadas en el documento de nivel superior se definen mediante embeds_many y embedded_in macros de MongoId.
+
+```
+class Band
+  include Mongoid::Document
+  embeds_many :albums
+end
+
+class Album
+  include Mongoid::Document
+  field :name, type: String
+  embedded_in :band
+end
+```
+
+
+
+

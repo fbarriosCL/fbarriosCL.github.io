@@ -272,4 +272,25 @@ db.user.update( {}, { $pull: { value: { $gte: 50 }}})
 
 db.user.update( {}, { $pullAll: { value: [4, 5] }})
 ```
+Arreglos:
+
+value [1,2,3,4,5]
+$slice: recorrera el arreglo hasta la posición 2 
+
+```
+db.user.find( {}, value: { $slice: 2 } )
+
+```
+
+Traeme todos los documentos donde se encuentre:
+
+```
+db.user.find( { name: {$in: "Felipe" }}, value: { $slice: 2 } )
+# Negación
+db.user.find( { name: {n$in: "Felipe" }}, value: { $slice: 2 } )
+
+```
+
+Documentos agrupados
+
 
