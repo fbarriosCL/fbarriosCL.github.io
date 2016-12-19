@@ -18,3 +18,14 @@ github_username:  fbarriosCL
 
 # Build settings
 markdown: kramdown
+
+# Navigation
+nav:
+  - name: "Rails"
+    href: "#"
+  - name: "Security"
+    href: "#"
+  - name: "BTA"
+    href: "https://backtrackacademy.com/"
+
+
