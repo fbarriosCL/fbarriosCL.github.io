@@ -2,7 +2,7 @@
 layout: post
 title:  "Rails 5 - Instalación y Configuración"
 date:   2016-04-20 00:37:19 -0300
-categories: jekyll update
+categories: rails
 ---
 
 A continuación aprenderemos a como instalar una aplicación en rails 5, para contribuir.

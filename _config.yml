@@ -18,3 +18,34 @@ github_username:  fbarriosCL
 
 # Build settings
 markdown: kramdown
+
+# Navigation
+nav:
+  - name: "Rails"
+    href: "#"
+  - name: "Security"
+    href: "#"
+  - name: "BTA"
+    href: "https://backtrackacademy.com/"
+
+categories: sample
+
+collections:
+  submod_cat:
+    output: true
+  submod_article:
+    output: true
+
+defaults:
+  -
+    scope:
+      type: submod_cat
+    values:
+      permalink: /blog/:categories/
+      layout: submod_category
+  -
+    scope:
+      type: submod_article
+    values:
+      permalink: /blog/:categories/:slug/
+      layout: submod_article

@@ -2,7 +2,7 @@
 layout: post
 title:  "Rails 4 Goodbye Mandrill Welcome To Amazon SES"
 date:   2016-04-25 00:37:19 -0300
-categories: jekyll update
+categories: aws
 ---
 
 Hoy llegando al departamento @abelorian, me comenta que llegado un mail a Backtrack Academy notificando que hoy se cancela nuestra cuenta en Mandrill, un servicio que teníamos implementado para la notificación de cursos y artículos mediantes correo electrónico  y como buen Chileno dejamos todo para el final. Lo positivo que escribimos juntos este post.
