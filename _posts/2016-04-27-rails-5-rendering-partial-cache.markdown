@@ -2,7 +2,7 @@
 layout: post
 title:  "Rails 5 render desde un partials cache"
 date:   2016-04-26 00:37:19 -0300
-categories: jekyll update
+categories: rails
 ---
 Vamos a echar un vistazo a un fragmento de código en rails 5 que hace uso de una colección parcial.
 

@@ -2,7 +2,7 @@
 layout: post
 title:  "Rails 5 - accessed_fields"
 date:   2016-04-26 00:37:19 -0300
-categories: jekyll update
+categories: rails
 ---
  
 En el siguiente ejemplo vamos a conocer una nueva funcionalidad que trae Rails5 para poder encontrar los campos que realmente estamos utilizando.

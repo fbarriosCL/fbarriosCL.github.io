@@ -2,7 +2,7 @@
 layout: post
 title:  "Rails 5 SQL Inyection On Rails"
 date:   2016-04-26 00:37:19 -0300
-categories: jekyll update
+categories: rails security
 ---
 El siguiente laboratorio tiene como objetivo comprender uno de los ataque más populares en aplicaciones web, Inyección SQL, como muchos sabrán una inyección sql tiene como objetivo hacer consultas a la base de datos mediante la manipulación de los parámetros evitando la autorización del administrador,pudiendo obtener la manipulación y extracción de datos confidenciales que pueden comprometer el modelo de negocio de la compañía.
 

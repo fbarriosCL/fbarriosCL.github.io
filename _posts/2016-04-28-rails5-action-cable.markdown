@@ -2,7 +2,7 @@
 layout: post
 title:  "Rails 5 Action Cable"
 date:   2016-04-26 00:37:19 -0300
-categories: jekyll update
+categories: rails
 ---
 Repositorio:
 Una de las caracteristicas mas esperadas por los desarrolladores de rails es la integracion de action cable en rails 5.

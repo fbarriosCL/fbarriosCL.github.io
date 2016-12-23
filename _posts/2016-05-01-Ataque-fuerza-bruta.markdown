@@ -2,7 +2,7 @@
 layout: post
 title:  "Python - Ataque fuerza bruta"
 date:   2016-05-01 00:37:19 -0300
-categories: jekyll update
+categories: rails security
 ---
 
 To install pip, securely download <a src="https://bootstrap.pypa.io/get-pip.py">get-pip.py</a>

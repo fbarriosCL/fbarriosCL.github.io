@@ -2,7 +2,7 @@
 layout: post
 title:  "Install ruby 2.3.0 con rvm"
 date:   2016-04-21 00:37:19 -0300
-categories: jekyll update
+categories: ruby
 ---
 ```
 ➜  rvm list
