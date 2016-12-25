@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Instalando Elasticsearch en rails Parte III - Config"
+title:  "Elasticsearch Parte III - Configurando ES en Rails 5"
 date:   2016-05-08 00:37:19 -0300
 categories: elasticsearch
 ---
