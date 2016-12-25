@@ -69,9 +69,9 @@ curl -XGET 'localhost:9200/bank/_search?pretty' -d'
 
 ### bool
 
-La consulta ```bool``` nos permite componer consultas más pequeñas en las consultas más grandes que utilizan la lógica booleana.
+La consulta ```bool``` nos permite componer consultas más grandes en consultas más pequeñas que utilizan lógica booleana.
 
-Devuelve todas las cuentas que contienen "molino" y "carril" en ```address```:
+Ejemplo: Devuelve todas las cuentas que contienen "mill" AND "lane" en ```address```:
 
 ```javascript
 curl -XGET 'localhost:9200/bank/_search?pretty' -d'
@@ -87,9 +87,11 @@ curl -XGET 'localhost:9200/bank/_search?pretty' -d'
 }'
 ```
 
-con must, ambas condiciones se deben cumplir
+```must``` == AND 
 
+Ejemplo: Devuelve todas las cuentas que contienen "molino" OR "carril" en ```adress```:
 
+```javascript
 curl -XGET 'localhost:9200/bank/_search?pretty' -d'
 {
   "query": {
@@ -101,9 +103,14 @@ curl -XGET 'localhost:9200/bank/_search?pretty' -d'
     }
   }
 }'
+```
 
-con should, cualquiera de las dos
+```should``` == OR 
 
+
+Ejemplo: se compone de dos consultas match y devuelve todas las cuentas que no contienen ni "molino" ni "Lane" en ```adress```:
+
+```javascript
 curl -XGET 'localhost:9200/bank/_search?pretty' -d'
 {
   "query": {
@@ -115,16 +122,99 @@ curl -XGET 'localhost:9200/bank/_search?pretty' -d'
     }
   }
 }'
+```
 
-con must_not, cualquiera de las dos
+## Filtros
 
+```_score``` es la relevancia de nuestro documento
 
+```filter``` permite utilizar una consulta para restringir los documentos que serán igualados por otras cláusulas.
 
+En este ejemplo se utiliza una consulta ```bool``` para devolver todas las cuentas con saldos entre 20000 y 30000, ambos inclusive. En otras palabras, queremos encontrar cuentas con un equilibrio que es mayor que o igual a 20.000 e inferior o igual a 30.000.
 
+```javascript
+curl -XGET 'localhost:9200/bank/_search?pretty' -d'
+{
+  "query": {
+    "bool": {
+      "must": { "match_all": {} },
+      "filter": {
+        "range": {
+          "balance": {
+            "gte": 20000,
+            "lte": 30000
+          }
+        }
+      }
+    }
+  }
+}'
 
+```
 
+## Executing Aggregations
 
+```javascript
+curl -XGET 'localhost:9200/ banco / _search?pretty' -d'
+{
+  "Tamaño": 0,
+  "aggs": {
+    "Group_by_state": {
+      "términos": {
+        "Campo": "state.keyword"
+      }
+    }
+  }
+}'
+```
 
+```
+SELECT state, COUNT(*) FROM bank GROUP BY state ORDER BY COUNT(*) DESC
+```
+
+otro ejemplo 
+
+```javascript
+curl -XGET 'localhost:9200/bank/_search?pretty' -d'
+{
+  "size": 0,
+  "aggs": {
+    "group_by_age": {
+      "range": {
+        "field": "age",
+        "ranges": [
+          {
+            "from": 20,
+            "to": 30
+          },
+          {
+            "from": 30,
+            "to": 40
+          },
+          {
+            "from": 40,
+            "to": 50
+          }
+        ]
+      },
+      "aggs": {
+        "group_by_gender": {
+          "terms": {
+            "field": "gender.keyword"
+          },
+          "aggs": {
+            "average_balance": {
+              "avg": {
+                "field": "balance"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}'
+```
 
 
 
