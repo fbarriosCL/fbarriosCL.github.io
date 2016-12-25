@@ -4,6 +4,7 @@ title:  "Elasticsearch Parte II - Busquedas"
 date:   2016-05-08 00:37:19 -0300
 categories: elasticsearch
 ---
+## Search API
 
 ```javascript
 curl -XGET 'search-es:9200/bank/_search?q=*&sort=account_number:asc&pretty&pretty'
@@ -11,37 +12,68 @@ curl -XGET 'search-es:9200/bank/_search?q=*&sort=account_number:asc&pretty&prett
 
 Primero buscamos ( ```_search``` final) en el índice de bancos, y el ```q=*``` parámetro indica Elasticsearch para que coincida con todos los documentos en el índice. El ```sort=account_number:asc``` parámetro indica para ordenar los resultados usando el ```account_number``` campo de cada documento en un orden ascendente. El ```pretty``` parámetro, de nuevo, sólo le dice Elasticsearch para devolver resultados JSON bastante impresos.
 
-Esta es la misma búsqueda exacta anteriormente utilizando el método de solicitud cuerpo alternativa:
+## Introducctión a Query Language
+<hr>
+### Query DSL
 
-``javascript
-curl -XGET 'localhost:9200/bank/_search?pretty' -d'
-{
-  "query": { "match_all": {} },
-  "sort": [
-    { "account_number": "asc" }
-  ]
-}'
-```
+```query``` definición de la consulta.
 
-La disección de lo anterior, la queryparte nos dice lo que es nuestra definición de la consulta y la match_allparte es simplemente el tipo de consulta que queremos ejecutar. La match_allconsulta es simplemente una búsqueda de todos los documentos en el índice especificado.
+```match_all``` consulta es una búsqueda en todos los documentos en el índice especificado.
 
-Además del queryparámetro, también podemos pasar a otros parámetros para influir en los resultados de búsqueda. En el ejemplo de la sección anterior pasamos en sort, aquí pasamos en size:
+También podemos pasar a otros parámetros para influir en los resultados de búsqueda. En el ejemplo de la sección anterior pasamos en ```sort```, ```size```:
 
+El parámetro ```from``` especifica el índice de documentos para iniciar desde y al size parámetro especifica el número de documentos para volver a partir de la del parámetro. Esta función es útil cuando se implementa paginación de resultados de búsqueda. Tenga en cuenta que si from no se especifica, el valor predeterminado es 0.
 
-Tenga en cuenta que si size no se especifica, el valor predeterminado es 10.
+Este ejemplo devolvera "_source": ["account_number", "balance"]
 
-En este ejemplo se hace una match_ally devuelve los documentos 11 a 20:
 
 ```javascript
 curl -XGET 'localhost:9200/bank/_search?pretty' -d'
 {
   "query": { "match_all": {} },
+  "sort": { "balance": { "order": "desc" } },
   "from": 10,
   "size": 10
+  "_source": ["account_number", "balance"]
 }'
-
 ```
 
+### Match query
+
+Retorna todos los ```account_number``` cuando su valor es 20
+
+```javascript
+curl -XGET 'localhost:9200/bank/_search?pretty' -d'
+{
+  "query": { "match": { "account_number": 20 } }
+}'
+```
+
+Este ejemplo devuelve todas las cuentas que contienen el término "mill" o "lane" en ```address```:
+
+```javascript
+curl -XGET 'localhost:9200/bank/_search?pretty' -d'
+{
+  "query": { "match": { "address": "mill lane" } }
+}'
+```
+
+```match_phrase``` devuelve todas las cuentas que contienen la frase "carril del molino" en  ```address```:
+
+```javascript
+curl -XGET 'localhost:9200/bank/_search?pretty' -d'
+{
+  "query": { "match_phrase": { "address": "mill lane" } }
+}'
+```
+
+### bool
+
+La consulta ```bool``` nos permite componer consultas más grandes en consultas más pequeñas que utilizan lógica booleana.
+
+Ejemplo: Devuelve todas las cuentas que contienen "mill" AND "lane" en ```address```:
+
+```javascript
 curl -XGET 'localhost:9200/bank/_search?pretty' -d'
 {
   "query": {
@@ -53,10 +85,13 @@ curl -XGET 'localhost:9200/bank/_search?pretty' -d'
     }
   }
 }'
+```
 
-con must, ambas condiciones se deben cumplir
+```must``` == AND 
 
+Ejemplo: Devuelve todas las cuentas que contienen "molino" OR "carril" en ```adress```:
 
+```javascript
 curl -XGET 'localhost:9200/bank/_search?pretty' -d'
 {
   "query": {
@@ -68,9 +103,14 @@ curl -XGET 'localhost:9200/bank/_search?pretty' -d'
     }
   }
 }'
+```
 
-con should, cualquiera de las dos
+```should``` == OR 
 
+
+Ejemplo: se compone de dos consultas match y devuelve todas las cuentas que no contienen ni "molino" ni "Lane" en ```adress```:
+
+```javascript
 curl -XGET 'localhost:9200/bank/_search?pretty' -d'
 {
   "query": {
@@ -82,16 +122,99 @@ curl -XGET 'localhost:9200/bank/_search?pretty' -d'
     }
   }
 }'
+```
 
-con must_not, cualquiera de las dos
+## Filtros
 
+```_score``` es la relevancia de nuestro documento
 
+```filter``` permite utilizar una consulta para restringir los documentos que serán igualados por otras cláusulas.
 
+En este ejemplo se utiliza una consulta ```bool``` para devolver todas las cuentas con saldos entre 20000 y 30000, ambos inclusive. En otras palabras, queremos encontrar cuentas con un equilibrio que es mayor que o igual a 20.000 e inferior o igual a 30.000.
 
+```javascript
+curl -XGET 'localhost:9200/bank/_search?pretty' -d'
+{
+  "query": {
+    "bool": {
+      "must": { "match_all": {} },
+      "filter": {
+        "range": {
+          "balance": {
+            "gte": 20000,
+            "lte": 30000
+          }
+        }
+      }
+    }
+  }
+}'
 
+```
 
+## Executing Aggregations
 
+```javascript
+curl -XGET 'localhost:9200/ banco / _search?pretty' -d'
+{
+  "Tamaño": 0,
+  "aggs": {
+    "Group_by_state": {
+      "términos": {
+        "Campo": "state.keyword"
+      }
+    }
+  }
+}'
+```
 
+```
+SELECT state, COUNT(*) FROM bank GROUP BY state ORDER BY COUNT(*) DESC
+```
+
+otro ejemplo 
+
+```javascript
+curl -XGET 'localhost:9200/bank/_search?pretty' -d'
+{
+  "size": 0,
+  "aggs": {
+    "group_by_age": {
+      "range": {
+        "field": "age",
+        "ranges": [
+          {
+            "from": 20,
+            "to": 30
+          },
+          {
+            "from": 30,
+            "to": 40
+          },
+          {
+            "from": 40,
+            "to": 50
+          }
+        ]
+      },
+      "aggs": {
+        "group_by_gender": {
+          "terms": {
+            "field": "gender.keyword"
+          },
+          "aggs": {
+            "average_balance": {
+              "avg": {
+                "field": "balance"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}'
+```
 
 
 
