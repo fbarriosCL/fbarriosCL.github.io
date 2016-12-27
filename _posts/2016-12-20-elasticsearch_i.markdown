@@ -127,7 +127,7 @@ curl -XGET 'search-es:9200/article/news/1'
 #### Borrar documento por ID
 
 ```javascript
-curl -XDELETE "search-es:9200/article/news/1"
+curl -XDELETE 'search-es:9200/documents_development'
 ```
 
 #### Actualizar documento
