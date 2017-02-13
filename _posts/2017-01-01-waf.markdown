@@ -1,0 +1,26 @@
+
+
+WAF WAF WAF
+
+![alt text](/assets/posts/02/01.png)
+
+A continuacion vamos a aprender como configurar WAF, un servicio de amazon, WAF ofrece dos servicios AWS WAF y AWS Shield para conocer sus diferencias veamos:
+
+
+
+AWS WAF 
+
+AWS WAF es un firewall de aplicaciones web que ayuda a proteger sus aplicaciones web contra vulnerabilidades comunes que podrían afectar la disponibilidad de la aplicación, comprometer la seguridad o consumir recursos excesivos.
+
+AWS Shield
+
+AWS Shield proporciona protección de ataque DDoS expandida para sus recursos AWS. Obtenga soporte 24/7 de nuestro equipo de respuesta DDoS y una visibilidad detallada de los eventos DDoS.
+
+Partamos por AWS WAF:
+
+![alt text](/assets/posts/02/02.png)
+
+AWS WAF 
+AWS WAF es un servicio de firewall de aplicaciones web que ayuda a proteger los sitios web y aplicaciones web que entregas con Amazon CloudFront y ELB Application Load Balancers. Cree listas de control de acceso a la web (ACLS web) que definen qué solicitudes HTTP y HTTPS permiten, bloquean o cuentan. Aprende más
+
+

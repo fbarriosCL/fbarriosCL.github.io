@@ -1,51 +1,49 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'jekyll serve'. If you change this file, please restart the server process.
-
 # Site settings
-title: fbarriosCL
-email: felipe@backtrackacademy.com
-description: > # this means to ignore newlines until "baseurl:"
-  I'm Felipe Barrios CEO of Backtrack Academy Ethical Hacking E-learning. 
-  Entrepreneur and back-end developer Ruby on Rails, Ror became my preferred language.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://backtrackacademy.com" # the base hostname & protocol for your site
-twitter_username: FbarriosL
-github_username:  fbarriosCL
+title: Lorem Ipsum - Web Developer
+description: "A blog about lorem ipsum ..."
+baseurl: "http://localhost:4000/" # for test: remove string '/space-jekyll-templa' to ''
+url: "http://localhost:4000/" # for test: remove string 'http://victorvoid.github.io' to '' but in production: 'https://yourusername.githu.io'
+# User settings
+username: lorem ipsum
+user_title: Lorem Ipsum - FrontEnd
+email: lorem.lorem@ipsum.com
+twitter_username: loremipsum
+github_username:  loremipsum
+gplus_username:  loremipsum
+disqus_username: loremipsum
 
 # Build settings
 markdown: kramdown
+highlighter: rouge
+permalink: /:title/
 
-# Navigation
-nav:
-  - name: "Rails"
-    href: "#"
-  - name: "Security"
-    href: "#"
-  - name: "BTA"
-    href: "https://backtrackacademy.com/"
 
-categories: sample
+# html minify
+compress_html:
+  clippings: all
+  comments: all
+  endings: []
+  profile: false
 
-collections:
-  submod_cat:
-    output: true
-  submod_article:
-    output: true
-
-defaults:
-  -
-    scope:
-      type: submod_cat
-    values:
-      permalink: /blog/:categories/
-      layout: submod_category
-  -
-    scope:
-      type: submod_article
-    values:
-      permalink: /blog/:categories/:slug/
-      layout: submod_article
+# Links to include in menu navigation
+links:
+  - title: home
+    url: /
+  - title: my posts
+    url: /posts
+  - title: series
+    url: /series
+  - title: tags
+    url: /tags
+  - title: about me
+    url: /about
+# projects in header index
+projects:
+  - name: asciilang
+    url: https://github.com/victorvoid/asciilang
+  - name: vim-frontend
+    url: https://github.com/victorvoid/vim-frontend
+  - name: generator-capybara
+    url: https://github.com/victorvoid/generator-capybara 
+# exclude my node related stuff
+exclude: ['package.json', 'src', 'node_modules']
