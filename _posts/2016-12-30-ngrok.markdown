@@ -1,0 +1,79 @@
+---
+layout: post
+title:  "ngrok tunnel local ports"
+date:   2016-05-08 00:37:19 -0300
+categories: ngrok
+---
+
+túneles seguros en localhost "Quiero exponer un servidor local detrás de un NAT o cortafuegos a Internet."
+
+Descargar: https://ngrok.com/download
+
+```
+~  ./ngrok -h
+NAME:
+   ngrok - tunnel local ports to public URLs and inspect traffic
+
+DESCRIPTION:
+    ngrok exposes local networked services behinds NATs and firewalls to the
+    public internet over a secure tunnel. Share local websites, build/test
+    webhook consumers and self-host personal services.
+    Detailed help for each command is available with 'ngrok help <command>'.
+    Open http://localhost:4040 for ngrok's web interface to inspect traffic.
+
+EXAMPLES:
+    ngrok http 80                    # secure public URL for port 80 web server
+    ngrok http -subdomain=baz 8080   # port 8080 available at baz.ngrok.io
+    ngrok http foo.dev:80            # tunnel to host:port instead of localhost
+    ngrok tcp 22                     # tunnel arbitrary TCP traffic to port 22
+    ngrok tls -hostname=foo.com 443  # TLS traffic for foo.com to port 443
+    ngrok start foo bar baz          # start tunnels from the configuration file
+
+VERSION:
+   2.1.14
+
+AUTHOR:
+  inconshreveable - <alan@ngrok.com>
+
+COMMANDS:
+   authtoken	save authtoken to configuration file
+   credits	prints author and licensing information
+   http		start an HTTP tunnel
+   start	start tunnels by name from the configuration file
+   tcp		start a TCP tunnel
+   tls		start a TLS tunnel
+   update	update ngrok to the latest version
+   version	print the version string
+   help		Shows a list of commands or help for one command
+
+```
+
+```
+ngrok by @inconshreveable                                                                                                                                            (Ctrl+C to quit)
+
+Session Status                online
+Update                        update available (version 2.1.18, Ctrl-U to update)
+Version                       2.1.14
+Region                        United States (us)
+Web Interface                 http://127.0.0.1:4040
+Forwarding                    http://9d77df85.ngrok.io -> localhost:4000
+Forwarding                    https://9d77df85.ngrok.io -> localhost:4000
+
+Connections                   ttl     opn     rt1     rt5     p50     p90
+                              20      1       0.22    0.06    1.01    2.48
+
+HTTP Requests
+-------------
+
+POST /create                   422 Unprocessable Entity
+POST /create                   422 Unprocessable Entity
+POST /create                   422 Unprocessable Entity
+POST /create                   422 Unprocessable Entity
+POST /create                   422 Unprocessable Entity
+POST /create                   422 Unprocessable Entity
+POST /create                   422 Unprocessable Entity
+POST /create                   422 Unprocessable Entity
+POST /create                   422 Unprocessable Entity
+POST /create                   422 Unprocessable Entity
+
+```
