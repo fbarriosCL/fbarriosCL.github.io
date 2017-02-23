@@ -81,7 +81,7 @@ iex> 3 + 1
 ```
 iex>  String.reverse "Backtrack Academy"
 "ymedacA kcartkcaB"
-``
+```
 
 Elixir tiene funciones auxiliares. por ejemplo comando para obtener ayuda ```h```
 
