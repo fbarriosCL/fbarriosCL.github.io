@@ -29,7 +29,7 @@ rvm rubies
 #  * - default
 ```
 
-Para instalar la version ```ruby 2.3``
+Para instalar la version ruby 2.3
 ```
 ➜ rvm install ruby-2.3.0
 rvm install ruby-2.3.0
