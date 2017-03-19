@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Install ruby 2.3.0 con rvm"
+title:  "Instalar ruby 2.3.0 con rvm"
 date:   2016-04-21 00:37:19 -0300
 categories: ruby
 ---
@@ -9,6 +9,7 @@ Documentación oficial:
 
 <b>https://rvm.io/rvm/install</b>
 
+Para instalar rvm
 
 ```
 \curl -sSL https://get.rvm.io | bash -s stable --ruby
