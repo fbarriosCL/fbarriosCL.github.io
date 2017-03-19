@@ -4,6 +4,18 @@ title:  "Install ruby 2.3.0 con rvm"
 date:   2016-04-21 00:37:19 -0300
 categories: ruby
 ---
+
+Documentación oficial:
+
+<b>https://rvm.io/rvm/install</b>
+
+
+```
+\curl -sSL https://get.rvm.io | bash -s stable --ruby
+```
+
+Para ver que version de ruby tenemos instaldo:
+
 ```
 ➜  rvm list
 
@@ -16,6 +28,7 @@ rvm rubies
 #  * - default
 ```
 
+Para instalar la version ```ruby 2.3``
 ```
 ➜ rvm install ruby-2.3.0
 rvm install ruby-2.3.0
