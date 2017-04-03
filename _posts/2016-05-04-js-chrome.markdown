@@ -30,6 +30,4 @@ function notifyMe() {
 }
 ```
 
-```
 <button onclick="notifyMe()">Notify me!</button>
-``

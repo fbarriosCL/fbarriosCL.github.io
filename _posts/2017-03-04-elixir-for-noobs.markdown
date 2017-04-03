@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "como empezar con Elixir y porque los developer deben utilizarlo"
+title: "Conociendo elixir en profundidad"
 date:   2017-02-03 00:37:19 -0300
 categories: elixir
 ---
@@ -8,7 +8,7 @@ categories: elixir
 #### ¿Qué es Elixir?
 Elixir creado por José Valim, comenta: "Me gustó todo lo que vi en Erlang, pero odiaba las cosas que no vi". Elixir tiene su propio sistema de gestión de paquetes -> hex.pm.
 
-Elixir es un lenguaje que se ejecuta en la máquina virtual de Erlang. Por lo que tiene todas las ventajas, probado en batalla y puede usar las bibliotecas existentes Erlang sin penalización en el rendimiento. Elixir y añade un montón de sutilezas. Uno de ellos es ```pipe operator``.
+Elixir es un lenguaje que se ejecuta en la máquina virtual de Erlang. Por lo que tiene todas las ventajas, probado en batalla y puede usar las bibliotecas existentes Erlang sin penalización en el rendimiento. Elixir y añade un montón de sutilezas. Uno de ellos es ```pipe operator```.
 
 La diferencia entre Erlang y elixir no es sólo la sintaxis. Sin embargo, la sintaxis es importante, y especialmente para desarrolladores de Ruby la sintaxis Elixir será muy familiar.
 
