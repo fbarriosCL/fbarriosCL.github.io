@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Docker en profundidad"
+title: "Docker primeros pasos"
 date:   2017-03-27 00:37:19 -0300
 categories: docker
 ---
@@ -70,7 +70,7 @@ Para descargar alguna imagen ejemplo:
 docker pull ubuntu
 ```
 
-### Conteiner 
+## Conteiner 
 
 Para ver conteiner
 
@@ -91,11 +91,11 @@ docker run -it ubuntu bash
 ```
 
 ```
-docker attach conteiner
+$ docker attach conteiner
 ```
 
 ```
-docker ps -a --no-trunc
+$ docker ps -a --no-trunc
 ```
 
 Crear un contenedor con nombre felipe
@@ -123,7 +123,7 @@ $ docker logs -f conteiner
 Elimiar conteiner:
 
 ```
-docker rm
+$ docker rm
 ```
 
 ```
@@ -343,7 +343,7 @@ $ docker kill NAME o CONTEINER_ID
 $ docker run -d -P NAME o CONTEINER_ID
 ```
 
-### ADD
+### Add
 
 Mismo formato instruccion COPY y ampos opetan de manera similar.
 ADD permite descomprimir archivos.
@@ -406,9 +406,9 @@ $ docker volume inspect
 $ docker volume rm
 ```
 
-Para montar un volumen se utiliza -v en el comando ```docker run``
+Para montar un volumen se utiliza -v en el comando ```docker run```
 
-Se pueden montar directorios del host con el formato ```-v [host path]:[conteiner path]:[ro|rw]
+Se pueden montar directorios del host con el formato ```-v [host path]:[conteiner path]:[ro|rw]```
 
 
 return id de los volumenes
@@ -454,6 +454,26 @@ $ docker run -ti -v /home/users/example:/example ubuntu bash
 ```
 
 
+## Docker compose
 
+Compose es una herramienta para crear y administrar aplicaciones multi-contenedor.
 
+- Arquitectura microservicios.
+- Muy tedioso ejecutar docker RUN
+
+docker-comopse.yml Define los servicios que componene la aplicacion.
+
+Cada servicio contiene las intrucciones para construir y ejecutar el contenedor.
+
+```
+web:                              < SERVICIO
+  build: .                        < RUTA BUILD
+  command: python example.py      < COMANDO INCIO
+  links:                          < LINK A CONTENEDOR
+    - redis                        
+  redis:                          
+    image: redis                  < IMAGEN
+```
+
+https://hub.docker.com/r/dockercloud/haproxy/
 
